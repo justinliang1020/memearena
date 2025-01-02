@@ -24,6 +24,25 @@
 		}
 	}
 
+	const NUMBER_OF_MEMES_TO_GENERATE = 30;
+	function refreshMemes() {
+		function getRandomValue<T>(arr: T[]): T {
+			const randomIndex = Math.floor(Math.random() * arr.length);
+			return arr[randomIndex];
+		}
+		const allImageBlocks = channels.flatMap((channel) => channel.imageBlocks);
+		const allTextBlocks = channels.flatMap((channel) => channel.textBlocks);
+
+		const newMemes: Meme[] = [];
+		for (let i = 0; i < NUMBER_OF_MEMES_TO_GENERATE; i++) {
+			newMemes.push({
+				imageBlock: getRandomValue(allImageBlocks),
+				textBlock: getRandomValue(allTextBlocks)
+			});
+		}
+		memes = newMemes;
+	}
+
 	let dummyChannel1: Channel = {
 		slug: 'dummyChannelslug1',
 		name: 'dummyChannelName1',
@@ -81,7 +100,7 @@
 		imageBlock: dummyChannel2.imageBlocks[0],
 		textBlock: dummyChannel2.textBlocks[0]
 	};
-	let memes: Meme[] = [
+	let memes: Meme[] = $state([
 		dummyMeme1,
 		dummyMeme1,
 		dummyMeme1,
@@ -104,7 +123,7 @@
 		dummyMeme2,
 		dummyMeme2,
 		dummyMeme2
-	];
+	]);
 </script>
 
 <main>
@@ -128,6 +147,7 @@
 					</li>
 				{/each}
 			</ul>
+			<button onclick={refreshMemes}>refresh memes</button>
 		</div>
 	</section>
 	<section class="content">

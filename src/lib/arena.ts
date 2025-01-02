@@ -1,6 +1,7 @@
 export interface Channel {
   slug: string;
   name: string;
+  userId: string;
   lastQueried: number; // ms from Date.now()
   imageBlocks: ImageBlock[];
   textBlocks: TextBlock[];
@@ -60,6 +61,7 @@ export async function getArenaChannel(channelSlug: string): Promise<Channel> {
         slug: data.slug,
         name: data.title,
         lastQueried: Date.now(),
+        userId: data.user_id
       };
     }
 
@@ -90,6 +92,7 @@ export async function getArenaChannel(channelSlug: string): Promise<Channel> {
   return {
     slug: channelMetadata.slug,
     name: channelMetadata.name,
+    userId: channelMetadata.userId,
     lastQueried: channelMetadata.lastQueried,
     imageBlocks,
     textBlocks,
