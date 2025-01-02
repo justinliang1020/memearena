@@ -1,26 +1,6 @@
 <script lang="ts">
 	import WikipediaImageFigure from '$lib/WikipediaImageFigure.svelte';
-	interface Channel {
-		id: string;
-		name: string;
-		lastQueried: number; // ms from Date.now()
-		imageBlocks: ImageBlock[];
-		textBlocks: TextBlock[];
-	}
-	interface BlockBase {
-		id: string;
-		title: string;
-	}
-	interface ImageBlock extends BlockBase {
-		src: string;
-	}
-	interface TextBlock extends BlockBase {
-		content: string;
-	}
-	interface Meme {
-		imageBlock: ImageBlock;
-		textBlock: TextBlock;
-	}
+	import type { Channel, Meme } from '$lib/arena';
 
 	let dummyChannel1: Channel = {
 		id: 'dummyChannelId1',
