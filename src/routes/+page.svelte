@@ -1,14 +1,36 @@
 <script lang="ts">
 	import WikipediaImageFigure from '$lib/WikipediaImageFigure.svelte';
 	import type { Channel, Meme } from '$lib/arena';
+	import { getArenaChannel, parseArenaChannelSlug } from '$lib/arena';
+
+	async function submitNewChannel(event: Event) {
+		event.preventDefault();
+		const form = event.target as HTMLFormElement;
+		const urlInput = form.querySelector<HTMLInputElement>('#channel-url');
+		if (!urlInput || !urlInput.value.trim()) {
+			//TODO: error handling
+			console.error('URL input is empty');
+			return;
+		}
+
+		const url = urlInput.value.trim();
+		try {
+			const channelSlug = parseArenaChannelSlug(url);
+			const channel = await getArenaChannel(channelSlug);
+			console.log(channel);
+			channels.push(channel);
+		} catch {
+			//TODO: error handling
+		}
+	}
 
 	let dummyChannel1: Channel = {
-		id: 'dummyChannelId1',
+		slug: 'dummyChannelslug1',
 		name: 'dummyChannelName1',
 		lastQueried: Date.now(),
 		imageBlocks: [
 			{
-				id: 'blockId1',
+				id: 'blockslug',
 				title: 'blockTitle1',
 				src: 'favicon.png'
 			}
@@ -27,7 +49,7 @@
 		]
 	};
 	let dummyChannel2: Channel = {
-		id: 'dummyChannelId2',
+		slug: 'dummyChannelSlug2',
 		name: 'dummyChannelName2',
 		lastQueried: Date.now(),
 		imageBlocks: [
@@ -91,7 +113,7 @@
 		<p>Randomly generated memes curated from <a href="https://www.are.na/">are.na</a> channels</p>
 		<h2>Channels</h2>
 		<div style="text-align: left;">
-			<form action="">
+			<form onsubmit={submitNewChannel}>
 				<label for="channel-url">are.na Channel URL</label>
 				<input type="text" id="channel-url" />
 				<button>submit</button>
