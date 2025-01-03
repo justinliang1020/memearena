@@ -89,8 +89,8 @@
 				{/each}
 			</ul>
 			<form onsubmit={onSubmitChannelUrlButton}>
-				<label for="channel-url">are.na Channel URL</label>
-				<input type="text" id="channel-url" />
+				<label for="channel-url">Add are.na channel:</label>
+				<input type="text" id="channel-url" placeholder="are.na channel URL" />
 				<button>submit</button>
 				<p style={isLoadingAddNewChannel ? '' : 'visibility: hidden;'}>
 					loading... (big channels take longer to load!)
@@ -117,6 +117,10 @@
 
 	:global(a) {
 		color: rgb(136, 163, 232);
+	}
+
+	::placeholder {
+		color: rgb(178, 190, 181);
 	}
 
 	main {
