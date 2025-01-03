@@ -62,7 +62,14 @@
 <main>
 	<section class="sidebar">
 		<h1>memeare.na</h1>
-		<p>Randomly generated memes curated from <a href="https://www.are.na/">are.na</a> channels</p>
+		<p>Randomly generated memes from <a href="https://www.are.na/">are.na</a> channels.</p>
+		<p>
+			First add are.na channel(s) that contain <b>image/text</b> blocks you want to use. Then click
+			<b>refresh memes</b> to generate memes that randomly pair an image block with a text block.
+			Currently the only meme format is a
+			<a href="https://www.are.na/justin-liang/fake-wikipedia-memes">fake wikipedia meme </a> but more
+			can be added later.
+		</p>
 		<h2>Channels</h2>
 		<div style="text-align: left;">
 			<ul class="channels-list">
@@ -90,7 +97,9 @@
 				</p>
 			</form>
 			<hr />
-			<button onclick={refreshMemes}>refresh memes</button>
+			<div style="text-align: center;">
+				<button onclick={refreshMemes}>refresh memes</button>
+			</div>
 		</div>
 	</section>
 	<section class="content">
