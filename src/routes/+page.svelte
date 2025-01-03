@@ -15,6 +15,21 @@
 		}
 	}
 
+	async function onSubmitChannelUrlButton(event: Event) {
+		event.preventDefault();
+		isLoadingAddNewChannel = true;
+		const form = event.target as HTMLFormElement;
+		const urlInput = form.querySelector<HTMLInputElement>('#channel-url');
+		if (!urlInput || !urlInput.value.trim()) {
+			//TODO: error handling
+			console.error('URL input is empty');
+			return;
+		}
+		const url = urlInput.value.trim();
+		await addNewChannel(url);
+		isLoadingAddNewChannel = false;
+	}
+
 	const NUMBER_OF_MEMES_TO_GENERATE = 30;
 	function refreshMemes() {
 		function getRandomValue<T>(arr: T[]): T {
@@ -41,6 +56,7 @@
 
 	let channels: Channel[] = $state([]);
 	let memes: Meme[] = $state([]);
+	let isLoadingAddNewChannel = $state(false);
 </script>
 
 <main>
@@ -49,25 +65,6 @@
 		<p>Randomly generated memes curated from <a href="https://www.are.na/">are.na</a> channels</p>
 		<h2>Channels</h2>
 		<div style="text-align: left;">
-			<form
-				onsubmit={(event) => {
-					event.preventDefault();
-					const form = event.target as HTMLFormElement;
-					const urlInput = form.querySelector<HTMLInputElement>('#channel-url');
-					if (!urlInput || !urlInput.value.trim()) {
-						//TODO: error handling
-						console.error('URL input is empty');
-						return;
-					}
-
-					const url = urlInput.value.trim();
-					addNewChannel(url);
-				}}
-			>
-				<label for="channel-url">are.na Channel URL</label>
-				<input type="text" id="channel-url" />
-				<button>submit</button>
-			</form>
 			<ul class="channels-list">
 				{#each channels as channel}
 					<!-- content here -->
@@ -84,6 +81,15 @@
 					</li>
 				{/each}
 			</ul>
+			<form onsubmit={onSubmitChannelUrlButton}>
+				<label for="channel-url">are.na Channel URL</label>
+				<input type="text" id="channel-url" />
+				<button>submit</button>
+				<p style={isLoadingAddNewChannel ? '' : 'visibility: hidden;'}>
+					loading... (big channels take longer to load!)
+				</p>
+			</form>
+			<hr />
 			<button onclick={refreshMemes}>refresh memes</button>
 		</div>
 	</section>
