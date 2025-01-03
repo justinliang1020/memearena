@@ -38,7 +38,7 @@ export function parseArenaChannelSlug(url: string): string {
 }
 
 export async function getArenaChannel(channelSlug: string): Promise<Channel> {
-  const baseUrl = `http://api.are.na/v2/channels/${channelSlug}`;
+  const baseUrl = `https://api.are.na/v2/channels/${channelSlug}`;
   const imageBlocks: ImageBlock[] = [];
   const textBlocks: TextBlock[] = [];
 
