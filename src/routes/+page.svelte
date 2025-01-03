@@ -69,9 +69,9 @@
 				{#each channels as channel}
 					<!-- content here -->
 					<li style={channel.hidden ? 'text-decoration: line-through;' : ''}>
-						<a href="https://www.example.com/">{channel.name}</a>:
-						<b>{channel.imageBlocks.length}</b>
-						image blocks & <b>{channel.textBlocks.length}</b> text blocks
+						<a href={`https://www.are.na/${channel.userSlug}/${channel.slug}`}>{channel.name}</a>:
+						<b>{channel.imageBlocks.length}</b> image blocks and
+						<b>{channel.textBlocks.length}</b> text blocks
 						<button onclick={() => (channel.hidden = !channel.hidden)}>hide</button>
 						<button
 							onclick={() => {

@@ -1,7 +1,7 @@
 export interface Channel {
   slug: string;
   name: string;
-  userId: string;
+  userSlug: string;
   lastQueried: number; // ms from Date.now()
   hidden: boolean;
   imageBlocks: ImageBlock[];
@@ -62,7 +62,7 @@ export async function getArenaChannel(channelSlug: string): Promise<Channel> {
         slug: data.slug,
         name: data.title,
         lastQueried: Date.now(),
-        userId: data.user_id
+        userSlug: data.user.slug
       };
     }
 
@@ -93,7 +93,7 @@ export async function getArenaChannel(channelSlug: string): Promise<Channel> {
   return {
     slug: channelMetadata.slug,
     name: channelMetadata.name,
-    userId: channelMetadata.userId,
+    userSlug: channelMetadata.userSlug,
     lastQueried: channelMetadata.lastQueried,
     hidden: false,
     imageBlocks,
