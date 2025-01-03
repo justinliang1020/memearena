@@ -2,18 +2,9 @@
 	import WikipediaImageFigure from '$lib/WikipediaImageFigure.svelte';
 	import type { Channel, Meme } from '$lib/arena';
 	import { getArenaChannel, parseArenaChannelSlug } from '$lib/arena';
+	import { onMount } from 'svelte';
 
-	async function submitNewChannel(event: Event) {
-		event.preventDefault();
-		const form = event.target as HTMLFormElement;
-		const urlInput = form.querySelector<HTMLInputElement>('#channel-url');
-		if (!urlInput || !urlInput.value.trim()) {
-			//TODO: error handling
-			console.error('URL input is empty');
-			return;
-		}
-
-		const url = urlInput.value.trim();
+	async function addNewChannel(url: string) {
 		try {
 			const channelSlug = parseArenaChannelSlug(url);
 			const channel = await getArenaChannel(channelSlug);
@@ -43,87 +34,13 @@
 		memes = newMemes;
 	}
 
-	let dummyChannel1: Channel = {
-		slug: 'dummyChannelslug1',
-		name: 'dummyChannelName1',
-		lastQueried: Date.now(),
-		imageBlocks: [
-			{
-				id: 'blockslug',
-				title: 'blockTitle1',
-				src: 'favicon.png'
-			}
-		],
-		textBlocks: [
-			{
-				id: 'blockId2',
-				title: 'blockTitle2',
-				content: 'blockContent2'
-			},
-			{
-				id: 'blockId5',
-				title: 'blockTitle5',
-				content: 'blockContent5'
-			}
-		]
-	};
-	let dummyChannel2: Channel = {
-		slug: 'dummyChannelSlug2',
-		name: 'dummyChannelName2',
-		lastQueried: Date.now(),
-		imageBlocks: [
-			{
-				id: 'blockId3',
-				title: 'blockTitle3',
-				src: 'favicon.png'
-			},
-			{
-				id: 'blockId6',
-				title: 'blockTitle6',
-				src: 'favicon.png'
-			}
-		],
-		textBlocks: [
-			{
-				id: 'blockId4',
-				title: 'blockTitle4',
-				content: 'blockContent4'
-			}
-		]
-	};
-	let channels: Channel[] = $state([dummyChannel1, dummyChannel2]);
-	let dummyMeme1: Meme = {
-		imageBlock: dummyChannel1.imageBlocks[0],
-		textBlock: dummyChannel1.textBlocks[0]
-	};
-	let dummyMeme2: Meme = {
-		imageBlock: dummyChannel2.imageBlocks[0],
-		textBlock: dummyChannel2.textBlocks[0]
-	};
-	let memes: Meme[] = $state([
-		dummyMeme1,
-		dummyMeme1,
-		dummyMeme1,
-		dummyMeme1,
-		dummyMeme1,
-		dummyMeme1,
-		dummyMeme1,
-		dummyMeme1,
-		dummyMeme1,
-		dummyMeme1,
-		dummyMeme1,
-		dummyMeme2,
-		dummyMeme2,
-		dummyMeme2,
-		dummyMeme2,
-		dummyMeme2,
-		dummyMeme2,
-		dummyMeme2,
-		dummyMeme2,
-		dummyMeme2,
-		dummyMeme2,
-		dummyMeme2
-	]);
+	onMount(async () => {
+		await addNewChannel('https://www.are.na/justin-liang/uncategorized-x90eek6ekqu');
+		refreshMemes();
+	});
+
+	let channels: Channel[] = $state([]);
+	let memes: Meme[] = $state([]);
 </script>
 
 <main>
@@ -132,7 +49,21 @@
 		<p>Randomly generated memes curated from <a href="https://www.are.na/">are.na</a> channels</p>
 		<h2>Channels</h2>
 		<div style="text-align: left;">
-			<form onsubmit={submitNewChannel}>
+			<form
+				onsubmit={(event) => {
+					event.preventDefault();
+					const form = event.target as HTMLFormElement;
+					const urlInput = form.querySelector<HTMLInputElement>('#channel-url');
+					if (!urlInput || !urlInput.value.trim()) {
+						//TODO: error handling
+						console.error('URL input is empty');
+						return;
+					}
+
+					const url = urlInput.value.trim();
+					addNewChannel(url);
+				}}
+			>
 				<label for="channel-url">are.na Channel URL</label>
 				<input type="text" id="channel-url" />
 				<button>submit</button>
@@ -140,10 +71,16 @@
 			<ul class="channels-list">
 				{#each channels as channel}
 					<!-- content here -->
-					<li>
+					<li style={channel.hidden ? 'text-decoration: line-through;' : ''}>
 						<a href="https://www.example.com/">{channel.name}</a>:
 						<b>{channel.imageBlocks.length}</b>
 						image blocks & <b>{channel.textBlocks.length}</b> text blocks
+						<button onclick={() => (channel.hidden = !channel.hidden)}>hide</button>
+						<button
+							onclick={() => {
+								channels = channels.filter((c) => c != channel);
+							}}>delete</button
+						>
 					</li>
 				{/each}
 			</ul>
@@ -158,6 +95,15 @@
 </main>
 
 <style>
+	:global(body) {
+		background-color: rgb(32, 33, 34);
+		color: rgb(248, 249, 250);
+	}
+
+	:global(a) {
+		color: rgb(136, 163, 232);
+	}
+
 	main {
 		display: flex;
 		flex-wrap: wrap;
@@ -171,7 +117,7 @@
 	}
 
 	.sidebar {
-		flex-basis: 25rem;
+		flex-basis: 30rem;
 		flex-grow: 1;
 		text-align: center;
 		border-right: black dashed 5px;

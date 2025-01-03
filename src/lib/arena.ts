@@ -3,6 +3,7 @@ export interface Channel {
   name: string;
   userId: string;
   lastQueried: number; // ms from Date.now()
+  hidden: boolean;
   imageBlocks: ImageBlock[];
   textBlocks: TextBlock[];
 }
@@ -94,6 +95,7 @@ export async function getArenaChannel(channelSlug: string): Promise<Channel> {
     name: channelMetadata.name,
     userId: channelMetadata.userId,
     lastQueried: channelMetadata.lastQueried,
+    hidden: false,
     imageBlocks,
     textBlocks,
   };
