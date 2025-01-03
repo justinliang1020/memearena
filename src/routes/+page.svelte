@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 
 	async function addNewChannel(url: string) {
+		isLoadingAddNewChannel = true;
 		try {
 			const channelSlug = parseArenaChannelSlug(url);
 			const channel = await getArenaChannel(channelSlug);
@@ -13,11 +14,11 @@
 		} catch {
 			//TODO: error handling
 		}
+		isLoadingAddNewChannel = false;
 	}
 
 	async function onSubmitChannelUrlButton(event: Event) {
 		event.preventDefault();
-		isLoadingAddNewChannel = true;
 		const form = event.target as HTMLFormElement;
 		const urlInput = form.querySelector<HTMLInputElement>('#channel-url');
 		if (!urlInput || !urlInput.value.trim()) {
@@ -27,7 +28,6 @@
 		}
 		const url = urlInput.value.trim();
 		await addNewChannel(url);
-		isLoadingAddNewChannel = false;
 	}
 
 	const NUMBER_OF_MEMES_TO_GENERATE = 30;
