@@ -69,11 +69,11 @@ export async function getArenaChannel(channelSlug: string): Promise<Channel> {
     // Process blocks from contents
     if (data.contents && data.contents.length > 0) {
       for (const block of data.contents) {
-        if (block.class === "Image" && block.image?.original) {
+        if (block.class === "Image" && block.image?.display) {
           imageBlocks.push({
             id: block.id,
             title: block.title || "Untitled",
-            src: block.image.original.url,
+            src: block.image.display.url,
           });
         } else if (block.class === "Text" && block.content) {
           textBlocks.push({
