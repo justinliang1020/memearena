@@ -59,10 +59,17 @@
 	}
 
 	onMount(async () => {
-		await addNewChannel('https://www.are.na/justin-liang/uncategorized-x90eek6ekqu');
+		for (const channelUrl of INITIAL_CHANNELS_URLS) {
+			await addNewChannel(channelUrl);
+		}
 		refreshMemes();
 	});
 
+	const INITIAL_CHANNELS_URLS: string[] = [
+		'https://www.are.na/justin-liang/uncategorized-x90eek6ekqu',
+		'https://www.are.na/connie-liu-kg4ypfp7ry0/universal-feelings-of-self-expression',
+		'https://www.are.na/connie-liu-kg4ypfp7ry0/we-live-in-a-seltzer-world'
+	];
 	let channels: Channel[] = $state([]);
 	let memes: Meme[] = $state([]);
 	let isLoadingAddNewChannel = $state(false);
