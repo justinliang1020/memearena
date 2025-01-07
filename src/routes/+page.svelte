@@ -86,11 +86,11 @@
 			<a href="https://www.are.na/justin-liang/fake-wikipedia-memes">fake wikipedia meme </a> but more
 			can be added later.
 		</p>
-		<p>
-			created by <a href="https://www.justinliang.me/">Justin</a> ~
-			<a href="https://github.com/justinliang1020/memearena">source code</a>
-		</p>
+		<hr />
 		<h2>Channels</h2>
+		<p>
+			<b>All blocks</b> from channels below will be used in memes (unless you press the "hide" button)
+		</p>
 		<div style="text-align: left;">
 			<ul class="channels-list">
 				{#each channels as channel}
@@ -118,8 +118,13 @@
 			</form>
 			<hr />
 			<div style="text-align: center;">
-				<button onclick={refreshMemes}>refresh memes</button>
+				<button onclick={refreshMemes}><b>Click to Refresh Memes</b></button>
 			</div>
+
+			<p style="text-align: center;">
+				created by <a href="https://www.justinliang.me/">Justin</a> ~
+				<a href="https://github.com/justinliang1020/memearena">source code</a>
+			</p>
 		</div>
 	</section>
 	<section class="content">
