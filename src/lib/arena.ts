@@ -47,7 +47,7 @@ export async function getArenaChannel(channelSlug: string): Promise<Channel> {
   let hasMoreData = true;
 
   while (hasMoreData) {
-    console.log(`Fetching page ${currentPage}`); // Debug log for pagination
+    console.log(`Fetching page ${currentPage} for ${channelSlug}`); // Debug log for pagination
 
     const response = await fetch(`${baseUrl}?page=${currentPage}`);
     if (!response.ok) {
