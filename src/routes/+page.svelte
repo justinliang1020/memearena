@@ -79,6 +79,10 @@
 			<a href="https://www.are.na/justin-liang/fake-wikipedia-memes">fake wikipedia meme </a> but more
 			can be added later.
 		</p>
+		<p>
+			created by <a href="https://www.justinliang.me/">Justin</a> ~
+			<a href="https://github.com/justinliang1020/memearena">source code</a>
+		</p>
 		<h2>Channels</h2>
 		<div style="text-align: left;">
 			<ul class="channels-list">
