@@ -36,9 +36,18 @@
 			const randomIndex = Math.floor(Math.random() * arr.length);
 			return arr[randomIndex];
 		}
-		const allImageBlocks = channels.flatMap((channel) => channel.imageBlocks);
-		const allTextBlocks = channels.flatMap((channel) => channel.textBlocks);
+		const allImageBlocks = channels
+			.filter((channel) => !channel.hidden)
+			.flatMap((channel) => channel.imageBlocks);
+		const allTextBlocks = channels
+			.filter((channel) => !channel.hidden)
+			.flatMap((channel) => channel.textBlocks);
 
+		const noMemes = allImageBlocks.length === 0 && allTextBlocks.length === 0;
+		if (noMemes) {
+			memes = [];
+			return;
+		}
 		const newMemes: Meme[] = [];
 		for (let i = 0; i < NUMBER_OF_MEMES_TO_GENERATE; i++) {
 			newMemes.push({
