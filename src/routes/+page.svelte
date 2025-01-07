@@ -117,7 +117,14 @@
 	</section>
 	<section class="content">
 		{#each memes as meme}
-			<WikipediaImageFigure caption={meme.textBlock.content} imageSrc={meme.imageBlock.src} />
+			<div style="text-align: center;">
+				<WikipediaImageFigure caption={meme.textBlock.content} imageSrc={meme.imageBlock.src} />
+				<p>
+					<a href="https://www.are.na/block/{meme.imageBlock.id}">image source</a>
+					|
+					<a href="https://www.are.na/block/{meme.textBlock.id}">text source</a>
+				</p>
+			</div>
 		{/each}
 	</section>
 </main>
